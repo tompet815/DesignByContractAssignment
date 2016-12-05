@@ -15,7 +15,8 @@ namespace ContractExApp
         {
             Balance = balance;
         }
-        //should decrease the account’s balance
+        //should increase the account’s balance with the amount, 
+        //the amount should always be positiv
         public double Deposit(double amount)
         {
 
@@ -26,7 +27,11 @@ namespace ContractExApp
             Contract.Ensures(
            Contract.Result<double>() == Contract.OldValue<double>(Balance) + amount
            );
-            Balance += amount;
+            Contract.Ensures(
+           Contract.Result<double>() >0
+           );
+            Balance += amount;
+
             return Balance;
         }
 
