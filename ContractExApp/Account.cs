@@ -13,25 +13,20 @@ namespace ContractExApp
 
         public Account(double balance)
         {
+            Contract.Requires(balance >= 0);            
             Balance = balance;
         }
         //should increase the account’s balance with the amount, 
         //the amount should always be positiv
         public double Deposit(double amount)
         {
-
             Contract.Requires(amount > 0);
             Contract.Ensures(
             Contract.Result<double>() > Contract.OldValue<double>(Balance)
             );
-            Contract.Ensures(
-           Contract.Result<double>() == Contract.OldValue<double>(Balance) + amount
-           );
-            Contract.Ensures(
-           Contract.Result<double>() >0
-           );
             Balance += amount;
-
+            
+        
             return Balance;
         }
 
@@ -40,16 +35,12 @@ namespace ContractExApp
         ////exceeds the balance, the  balance should be left untouched and an exception should be thrown
         public double Withdraw(double amount)
         {
-            
             Contract.Requires(amount > 0);
             Contract.Ensures(
             Contract.Result<double>() < Contract.OldValue<double>(Balance)
             );
             Contract.EnsuresOnThrow<NotEnoughBalanceException>(
               Contract.OldValue<double>(Balance) == Balance
-            );
-            Contract.Ensures(
-            Contract.Result<double>() == Contract.OldValue<double>(Balance) - amount
             );
             try
             {
@@ -66,5 +57,13 @@ namespace ContractExApp
             return Balance;
         }
 
+        [ContractInvariantMethod]
+        private void InvariantMethod()
+        {
+            Contract.Invariant(Balance >= 0);
+
+        }
+
     }
+
 }

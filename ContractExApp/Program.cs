@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace ContractExApp
     {
         static void Main(string[] args)
         {
+            Contract.Requires(args.Length == 0);
+            //Account acc = new Account(-100);
             Account acc = new Account(100);
             Console.WriteLine("The original balance is: " + acc.Balance);
             Console.WriteLine("Depositing 10 ");
